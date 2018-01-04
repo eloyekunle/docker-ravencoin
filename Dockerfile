@@ -1,5 +1,5 @@
 FROM ubuntu:xenial
-MAINTAINER Andreas Lingenhag <a.lingenhag@gmail.com>
+MAINTAINER Andreas Lingenhag <11538311+alingenhag@users.noreply.github.com>
 
 ARG USER_ID
 ARG GROUP_ID
