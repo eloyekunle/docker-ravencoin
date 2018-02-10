@@ -1,62 +1,64 @@
-FROM ubuntu:xenial
+FROM ubuntu:artful
+
 MAINTAINER Andreas Lingenhag <11538311+alingenhag@users.noreply.github.com>
 
-ARG USER_ID
-ARG GROUP_ID
-ARG VERSION
-
+# switch to root, let the entrypoint drop back to configured user
+USER root
 ENV USER ravencoin
-ENV COMPONENT ${USER}
-ENV HOME /${USER}
 
-# add user with specified (or default) user/group ids
-ENV USER_ID ${USER_ID:-1000}
-ENV GROUP_ID ${GROUP_ID:-1000}
+RUN apt-get update && apt-get install -y software-properties-common \
+ && apt-add-repository ppa:bitcoin/bitcoin \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends \
+    build-essential \
+    automake \
+    bsdmainutils \
+    git \
+    gnupg2 \
+    libboost-all-dev \
+    libdb4.8-dev \
+    libdb4.8++-dev \
+    libevent-dev \
+    libssl-dev \
+    libtool \
+    pkg-config \
+    wget
 
-# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -g ${GROUP_ID} ${USER} \
-	&& useradd -u ${USER_ID} -g ${USER} -s /bin/bash -m -d ${HOME} ${USER}
+# dependencies for qt-gui
+RUN apt-get install -y --no-install-recommends \
+    libqrencode-dev \
+    libqt5gui5 \
+    libqt5core5a \
+    libqt5dbus5 \
+    protobuf-compiler \
+    qttools5-dev \
+    qttools5-dev-tools
 
-# grab gosu for easy step-down from root
-ENV GOSU_VERSION 1.7
-RUN set -x \
-	&& apt-get update && apt-get install -y --no-install-recommends \
-		ca-certificates \
-                libevent-dev \
-		libboost-all-dev \
-		libminiupnpc10 \
-		libzmq5 \
-		software-properties-common \
-		wget \
-		qt5-default \
-		libqt5network5 \
-		libqt5widgets5 \
-        && add-apt-repository ppa:bitcoin/bitcoin \
-	&& apt-get update && apt-get -y install libdb4.8-dev libdb4.8++-dev libqrencode3 \
-	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
-	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
-	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
-	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
-	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
-	&& chmod +x /usr/local/bin/gosu \
-	&& gosu nobody true
+WORKDIR /tmp
 
-ENV VERSION ${VERSION:-2.2.1}
-RUN mkdir -p /opt/ravencoin/bin \
-    && wget -O /opt/ravencoin/bin/ravend "https://github.com/RavenProject/Ravencoin/raw/master/binaries/release/linux/ubuntu_16.04/ravend" \
-    && wget -O /opt/ravencoin/bin/raven-cli "https://github.com/RavenProject/Ravencoin/raw/master/binaries/release/linux/ubuntu_16.04/raven-cli" \
-    && wget -O /opt/ravencoin/bin/raven-qt "https://github.com/RavenProject/Ravencoin/raw/master/binaries/release/linux/ubuntu_16.04/raven-qt" \
-    && wget -O /opt/ravencoin/bin/raven-tx "https://github.com/RavenProject/Ravencoin/raw/master/binaries/release/linux/ubuntu_16.04/raven-tx" \
-    && cd /opt/ravencoin/bin \
-    && chmod +x * 
+#install su-exec
+RUN git clone https://github.com/ncopa/su-exec.git \
+ && cd su-exec && make && cp su-exec /usr/local/bin/ \
+ && cd .. && rm -rf su-exec
 
-EXPOSE 8767 8767
+# add user to the system
+RUN useradd -d /home/"${USER}" -s /bin/sh -G users "${USER}"
 
-RUN set -x && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN git clone https://github.com/RavenProject/Ravencoin.git \
+ && cd Ravencoin \
+ && ./autogen.sh \
+ && ./configure \
+ && make -j8 \
+ && make install \
+ && cd ~ \
+ && rm -rf /tmp/*
 
-VOLUME ["${HOME}"]
-WORKDIR ${HOME}
-ADD ./bin /usr/local/bin
-ENTRYPOINT ["docker-entrypoint.sh"]
+EXPOSE 8767
+
+WORKDIR /home/"${USER}"
+
+# add startup scripts
+ADD ./scripts /usr/local/bin
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["start-unprivileged.sh"]
+

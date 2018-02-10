@@ -1,0 +1,1 @@
+docker build --build-arg VERSION=1.0.2 -t fuzzle/ravencoin:1.0.2 .

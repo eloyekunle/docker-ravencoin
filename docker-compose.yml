@@ -1,27 +1,23 @@
-version: 3
-
+version: '3'
+  
 services:
-  raven:
-    container_name: raven
-    image: ravencoin:1.0.0
-    network_mode: "bridge"
-    ports:
-      - 8767:8767
-    volumes:
-      - '~/crypto/raven:/ravencoin'
-
-  raven-qt:
-    container_name: raven-qt
+  ravencoin-qt:
     image: fuzzle/ravencoin:1.0.2
+    container_name: "ravencoin-qt"
     network_mode: "bridge"
-    ports:
-      - 8767:8767
     environment:
       - DISPLAY=$DISPLAY
     volumes:
-      - '~/crypto/raven:/ravencoin'
+      - '~/raven:/home/raven'
       - '/tmp/.X11-unix:/tmp/.X11-unix'
     stdin_open: true
     tty: true
-    command: /opt/ravencoin/bin/raven-qt
+    command: /usr/local/bin/raven-qt
+
+  pivx:
+    image: fuzzle/ravencoin:1.0.2
+    container_name: "ravencoin"
+    network_mode: "bridge"
+    volumes:
+      - '~/raven:/home/raven'
 

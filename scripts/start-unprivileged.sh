@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 set -x
 
-EXECUTABLE=/opt/ravencoin/bin/ravend
+EXECUTABLE=/usr/local/bin/ravend
 DIR=$HOME/.raven
 FILENAME=ravencoin.conf
 FILE=$DIR/$FILENAME
@@ -20,14 +20,11 @@ rpcallowip=10.0.0.0/8
 rpcallowip=172.16.0.0/12
 rpcallowip=192.168.0.0/16
 server=1
-rpcuser=${RPCUSER:-ravenrpc}
+rpcuser=${RPCUSER:-`dd if=/dev/urandom bs=33 count=1 2>/dev/null | base64`}
 rpcpassword=${RPCPASSWORD:-`dd if=/dev/urandom bs=33 count=1 2>/dev/null | base64`}
 EOF
 
 fi
-
-cat $FILE
-ls -lah $DIR/
 
 echo "Initialization completed successfully"
 

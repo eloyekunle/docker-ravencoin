@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 set -x
 
 USER=ravencoin
 
 chown -R ${USER} .
-exec gosu ${USER} "$@"
+exec su-exec ${USER} "$@"
