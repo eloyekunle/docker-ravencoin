@@ -2,7 +2,7 @@ version: '3'
   
 services:
   ravencoin-qt:
-    image: fuzzle/ravencoin:1.0.2
+    image: fuzzle/ravencoin:latest
     container_name: "ravencoin-qt"
     network_mode: "bridge"
     environment:
@@ -14,8 +14,8 @@ services:
     tty: true
     command: /usr/local/bin/raven-qt
 
-  pivx:
-    image: fuzzle/ravencoin:1.0.2
+  ravencoin:
+    image: fuzzle/ravencoin:latest
     container_name: "ravencoin"
     network_mode: "bridge"
     volumes:

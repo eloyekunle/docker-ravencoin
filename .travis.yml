@@ -1,0 +1,12 @@
+sudo: true
+dist: trusty
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - cat version.txt
+      - ./docker-build-command.sh `cat version.txt`
+      - docker images
+      - docker push fuzzle/ravencoin

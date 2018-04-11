@@ -5,6 +5,7 @@ MAINTAINER Andreas Lingenhag <11538311+alingenhag@users.noreply.github.com>
 # switch to root, let the entrypoint drop back to configured user
 USER root
 ENV USER ravencoin
+ARG VERSION
 
 RUN apt-get update && apt-get install -y software-properties-common \
  && apt-add-repository ppa:bitcoin/bitcoin \
@@ -44,11 +45,12 @@ RUN git clone https://github.com/ncopa/su-exec.git \
 # add user to the system
 RUN useradd -d /home/"${USER}" -s /bin/sh -G users "${USER}"
 
-RUN git clone https://github.com/RavenProject/Ravencoin.git \
- && cd Ravencoin \
+RUN wget -O /tmp/Ravencoin-"${VERSION}".tar.gz "https://github.com/RavenProject/Ravencoin/archive/v${VERSION}.tar.gz" \
+ && tar xzpvf Ravencoin-"${VERSION}".tar.gz \
+ && cd Ravencoin-"${VERSION}" \
  && ./autogen.sh \
  && ./configure \
- && make -j8 \
+ && make -j1 \
  && make install \
  && cd ~ \
  && rm -rf /tmp/*

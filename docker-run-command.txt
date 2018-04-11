@@ -1,1 +1,1 @@
-docker run -itd -v ~/raven:/home/raven -p 51472:51472 fuzzle/ravencoin:1.0.2
+docker run -itd -v ~/raven:/home/raven -p 51472:51472 fuzzle/ravencoin:latest
