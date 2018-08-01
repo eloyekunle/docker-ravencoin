@@ -36,7 +36,7 @@ RUN useradd -d /home/"${USER}" -s /bin/sh -G users "${USER}"
 
 RUN wget -O /tmp/Ravencoin-"${VERSION}".tar.gz "https://github.com/RavenProject/Ravencoin/releases/download/v${VERSION}/ravencoin-${VERSION}-$(arch)-linux-gnu.tar.gz" \
  && tar xzpvf Ravencoin-"${VERSION}".tar.gz \
- && mv Ravencoin-"${VERSION}"/ravencoin-"${VERSION}"/bin/* /usr/local/bin/ \
+ && mv ravencoin-"${VERSION}"/bin/* /usr/local/bin/ \
  && cd ~ \
  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
