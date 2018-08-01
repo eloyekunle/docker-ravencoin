@@ -2,7 +2,7 @@
 set -x
 
 EXECUTABLE=/usr/local/bin/ravend
-DIR=$HOME/ravencoin
+DIR=$HOME/.raven
 FILENAME=ravencoin.conf
 FILE=$DIR/$FILENAME
 
