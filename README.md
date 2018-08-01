@@ -1,4 +1,4 @@
-# Docker Image for RAVENCOIN [![Build Status](https://travis-ci.org/f-u-z-z-l-e/docker-ravencoin.svg?branch=master)](https://travis-ci.org/f-u-z-z-l-e/docker-ravencoin)
+# Docker Image for RAVENCOIN [![Build Status](https://travis-ci.org/eloyekunle/docker-ravencoin.svg?branch=master)](https://travis-ci.org/eloyekunle/docker-ravencoin)
 
 This repository is setup to create a docker image for [RAVENCOIN](https://ravencoin.org/)
 
