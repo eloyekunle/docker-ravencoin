@@ -11,29 +11,17 @@ RUN apt-get update && apt-get install -y software-properties-common \
  && apt-add-repository ppa:bitcoin/bitcoin \
  && apt-get update \
  && apt-get install -y --no-install-recommends \
-    build-essential \
-    automake \
-    bsdmainutils \
-    git \
-    gnupg2 \
+    ca-certificates \
+    wget \
+    software-properties-common \
+    libevent-dev \
     libboost-all-dev \
+    libminiupnpc10 \
+    libzmq5 \
     libdb4.8-dev \
     libdb4.8++-dev \
-    libevent-dev \
-    libssl-dev \
-    libtool \
-    pkg-config \
-    wget
-
-# dependencies for qt-gui
-RUN apt-get install -y --no-install-recommends \
-    libqrencode-dev \
-    libqt5gui5 \
-    libqt5core5a \
-    libqt5dbus5 \
-    protobuf-compiler \
-    qttools5-dev \
-    qttools5-dev-tools
+    libprotobuf-dev \
+    protobuf-compiler
 
 WORKDIR /tmp
 
@@ -47,9 +35,9 @@ RUN useradd -d /home/"${USER}" -s /bin/sh -G users "${USER}"
 
 RUN wget -O /tmp/Ravencoin-"${VERSION}".tar.gz "https://github.com/RavenProject/Ravencoin/releases/download/v${VERSION}/ravencoin-${VERSION}-$(arch)-linux-gnu.tar.gz" \
  && tar xzpvf Ravencoin-"${VERSION}".tar.gz \
- && mv Ravencoin-"${VERSION}"/bin/* /usr/local/bin/ \
+ && mv Ravencoin-"${VERSION}"/ravencoin-"${VERSION}"/bin/* /usr/local/bin/ \
  && cd ~ \
- && rm -rf /tmp/*
+ && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 8767
 
