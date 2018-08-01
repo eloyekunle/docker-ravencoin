@@ -1,4 +1,4 @@
-FROM ubuntu:artful
+FROM ubuntu:bionic
 
 MAINTAINER Andreas Lingenhag <11538311+alingenhag@users.noreply.github.com>
 
