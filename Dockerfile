@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
  && apt-add-repository ppa:bitcoin/bitcoin \
  && apt-get update \
  && apt-get install -y --no-install-recommends \
+    build-essential \
     ca-certificates \
     wget \
     git \
