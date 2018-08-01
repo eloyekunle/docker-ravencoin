@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
  && apt-get install -y --no-install-recommends \
     ca-certificates \
     wget \
-    software-properties-common \
+    git \
     libevent-dev \
     libboost-all-dev \
     libminiupnpc10 \
