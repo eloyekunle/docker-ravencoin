@@ -1,8 +1,5 @@
 sudo: true
-dist: bionic
-
-services:
-  - docker
+dist: trusty
 
 jobs:
   include:
