@@ -9,4 +9,4 @@ jobs:
       - cat version.txt
       - ./docker-build-command.sh `cat version.txt`
       - docker images
-      - docker push fuzzle/ravencoin
+      - docker push playmice/ravencoin
