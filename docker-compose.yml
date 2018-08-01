@@ -8,7 +8,7 @@ services:
     environment:
       - DISPLAY=$DISPLAY
     volumes:
-      - '~/raven:/home/raven'
+      - '~/raven:/home/ravencoin'
       - '/tmp/.X11-unix:/tmp/.X11-unix'
     stdin_open: true
     tty: true
