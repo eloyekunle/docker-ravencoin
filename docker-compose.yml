@@ -19,5 +19,5 @@ services:
     container_name: "ravencoin"
     network_mode: "bridge"
     volumes:
-      - '~/raven:/home/raven'
+      - '~/raven:/home/ravencoin'
 
