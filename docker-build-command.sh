@@ -6,4 +6,4 @@ set -e
 # version number argument
 VERSION="$1"
 
-docker build --build-arg VERSION="${VERSION}" -t fuzzle/ravencoin:"${VERSION}" -t fuzzle/ravencoin:latest .
+docker build --build-arg VERSION="${VERSION}" -t playmice/ravencoin:"${VERSION}" -t playmice/ravencoin:latest .

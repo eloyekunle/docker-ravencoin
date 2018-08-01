@@ -2,7 +2,7 @@ version: '3'
   
 services:
   ravencoin-qt:
-    image: fuzzle/ravencoin:latest
+    image: playmice/ravencoin:latest
     container_name: "ravencoin-qt"
     network_mode: "bridge"
     environment:
@@ -15,7 +15,7 @@ services:
     command: /usr/local/bin/raven-qt
 
   ravencoin:
-    image: fuzzle/ravencoin:latest
+    image: playmice/ravencoin:latest
     container_name: "ravencoin"
     network_mode: "bridge"
     volumes:

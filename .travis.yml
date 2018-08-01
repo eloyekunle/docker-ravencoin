@@ -1,6 +1,9 @@
 sudo: true
 dist: bionic
 
+services:
+  - docker
+
 jobs:
   include:
     - stage: build docker image
