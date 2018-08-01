@@ -45,13 +45,9 @@ RUN git clone https://github.com/ncopa/su-exec.git \
 # add user to the system
 RUN useradd -d /home/"${USER}" -s /bin/sh -G users "${USER}"
 
-RUN wget -O /tmp/Ravencoin-"${VERSION}".tar.gz "https://github.com/RavenProject/Ravencoin/archive/v${VERSION}.tar.gz" \
+RUN wget -O /tmp/Ravencoin-"${VERSION}".tar.gz "https://github.com/RavenProject/Ravencoin/releases/download/v${VERSION}/ravencoin-${VERSION}-$(arch)-linux-gnu.tar.gz" \
  && tar xzpvf Ravencoin-"${VERSION}".tar.gz \
- && cd Ravencoin-"${VERSION}" \
- && ./autogen.sh \
- && ./configure \
- && make -j1 \
- && make install \
+ && mv Ravencoin-"${VERSION}"/bin/* /usr/local/bin/ \
  && cd ~ \
  && rm -rf /tmp/*
 
