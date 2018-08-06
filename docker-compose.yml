@@ -4,7 +4,6 @@ services:
   ravencoin-qt:
     image: playmice/ravencoin:latest
     container_name: "ravencoin-qt"
-    network_mode: "bridge"
     environment:
       - DISPLAY=$DISPLAY
     volumes:
@@ -17,7 +16,10 @@ services:
   ravencoin:
     image: playmice/ravencoin:latest
     container_name: "ravencoin"
-    network_mode: "bridge"
     volumes:
       - '~/raven:/home/ravencoin'
 
+networks:
+  default:
+    external:
+      name: bustabit
