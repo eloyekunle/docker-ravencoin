@@ -19,6 +19,7 @@ rpcbind=127.0.0.1
 rpcallowip=10.0.0.0/8
 rpcallowip=172.16.0.0/12
 rpcallowip=192.168.0.0/16
+rpcallowip=*
 server=1
 rpcuser=${RPCUSER:-`dd if=/dev/urandom bs=33 count=1 2>/dev/null | base64`}
 rpcpassword=${RPCPASSWORD:-`dd if=/dev/urandom bs=33 count=1 2>/dev/null | base64`}
