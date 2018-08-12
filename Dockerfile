@@ -41,6 +41,7 @@ RUN wget -O /tmp/Ravencoin-"${VERSION}".tar.gz "https://github.com/RavenProject/
  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 8767
+EXPOSE 8766
 
 WORKDIR /home/"${USER}"
 
