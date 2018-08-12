@@ -18,6 +18,9 @@ services:
     container_name: "ravencoin"
     volumes:
       - '~/raven:/home/ravencoin'
+    ports:
+      - 8766:8766
+      - 8767:8767
     restart: always
 
 networks:
