@@ -19,7 +19,7 @@ services:
     volumes:
       - '~/raven:/home/ravencoin'
     ports:
-      - 127.0.0.1:8766:8766
+      - 8766:8766
       - 8767:8767
     restart: always
 
