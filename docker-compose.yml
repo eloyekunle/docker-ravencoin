@@ -18,6 +18,7 @@ services:
     container_name: "ravencoin"
     volumes:
       - '~/raven:/home/ravencoin'
+    restart: always
 
 networks:
   default:
